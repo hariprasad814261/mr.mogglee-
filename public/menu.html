@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moglee's Kitchen | Authentic Fire-Grilled Flavor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts: Anton (Blocky Headings), Dancing Script (Cursive), Inter (Body), Rye (Western) -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@600;700&family=Inter:wght@400;500;600&family=Rye&display=swap" rel="stylesheet">
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="antialiased overflow-x-hidden selection:bg-brand-500 selection:text-white">
+
+    <div class="noise-overlay"></div>
+    <div class="fire-glow"></div>
+    
+    <!-- New Brand Logo Background (4K Quality Watermark) -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#0a0a0a]">
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 mix-blend-screen" style="background-image: url('Brand Assets/Mr.Moglee - Final Logo.jpg.jpeg');"></div>
+        <div class="absolute inset-0 bg-black/60"></div>
+    </div>
+    
+    <!-- Flying Fire Sparks / Charcoal Embers -->
+    <canvas id="fireSparksCanvas" class="fixed inset-0 z-0 pointer-events-none mix-blend-screen"></canvas>
+
+    <!-- Navigation -->
+    <div class="fixed top-0 inset-x-0 z-[100] flex justify-center mt-6 px-4 pointer-events-none transition-all duration-300 animate-fade-in-up">
+        <nav class="pointer-events-auto flex items-center justify-between gap-6 md:gap-12 bg-black/60 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(255,102,0,0.15)] rounded-full px-6 py-3 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,102,0,0.25)] hover:border-brand-500/30 w-full max-w-5xl mx-auto">
+            
+            <div class="hidden md:flex items-center gap-6 lg:gap-10 text-xs font-block tracking-wider uppercase text-gray-300">
+                <a href="index.html#home" class="hover:text-brand-500 hover:drop-shadow-[0_0_10px_rgba(255,102,0,0.8)] transition-all">Home</a>
+                <a href="index.html#about" class="hover:text-brand-500 hover:drop-shadow-[0_0_10px_rgba(255,102,0,0.8)] transition-all">About</a>
+                <a href="menu.html" class="text-brand-500 drop-shadow-[0_0_10px_rgba(255,102,0,0.8)] transition-all">Menu</a>
+                <a href="index.html#contact" class="hover:text-brand-500 hover:drop-shadow-[0_0_10px_rgba(255,102,0,0.8)] transition-all">Contact</a>
+            </div>
+            
+            <div class="flex items-center justify-between md:justify-end w-full md:w-auto gap-4">
+                <button class="text-white bg-surface-800/80 border border-brand-500/50 hover:bg-brand-500 font-block tracking-widest text-xs px-5 py-2.5 rounded-full transition-all duration-300 uppercase shadow-[0_0_15px_rgba(255,102,0,0.2)] hover:shadow-[0_0_20px_rgba(255,102,0,0.6)]">
+                    Branches
+                </button>
+                <button class="btn-orange bg-brand-500 text-white font-block tracking-widest text-sm px-6 py-2.5 rounded-full shadow-[0_0_15px_rgba(255,102,0,0.5)] hover:shadow-[0_0_30px_rgba(255,102,0,0.8)] transition-all duration-300 uppercase">
+                    Order Now
+                </button>
+                <button id="mobileMenuBtn" class="md:hidden text-brand-500 focus:outline-none ml-auto">
+                    <svg class="w-8 h-8 drop-shadow-[0_0_8px_rgba(255,102,0,0.8)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Mobile Menu Container -->
+    <div id="mobileMenu" class="hidden fixed inset-0 z-[60] bg-black/95 backdrop-blur-md pt-24 px-6 flex-col gap-6 text-center">
+        <a href="index.html#home" class="font-block text-2xl tracking-widest uppercase text-white hover:text-brand-500">Home</a>
+        <a href="index.html#about" class="font-block text-2xl tracking-widest uppercase text-white hover:text-brand-500">About</a>
+        <a href="menu.html" class="font-block text-2xl tracking-widest uppercase text-brand-500">Menu</a>
+        <button class="font-block text-2xl tracking-widest uppercase text-white hover:text-brand-500">Branches</button>
+        <button class="font-block text-2xl tracking-widest uppercase text-white hover:text-brand-500">Order Online</button>
+        <a href="index.html#contact" class="font-block text-2xl tracking-widest uppercase text-white hover:text-brand-500">Contact</a>
+    </div>
+
+    <!-- Minimal Menu Hero -->
+    <header class="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 pt-28 md:pt-36 pb-16 text-center">
+        <h2 class="font-script text-brand-500 text-4xl md:text-5xl mb-2 animate-fade-in-up">Discover our flavors</h2>
+        <h1 class="font-block text-white text-6xl md:text-8xl tracking-wide uppercase animate-fade-in-up delay-100">Our <span class="text-brand-500">Menu</span></h1>
+    </header>
+
+    <!-- Signature Menu Section -->
+    <!-- Signature Menu Section -->
+    <section id="menu" class="relative z-10 w-full max-w-7xl mx-auto py-16 flex flex-col gap-8">
+        
+        <!-- Item 1: Shawarma Plate -->
+        <div class="relative w-full px-6 lg:px-12 py-12 flex flex-col md:flex-row items-center justify-between border-b border-surface-800">
+            <!-- Left: Stamp -->
+            <div class="md:w-1/4 flex flex-col items-center md:items-start text-center md:text-left transform -rotate-3 mb-12 md:mb-0">
+                <div class="flex gap-1 mb-2 text-white justify-center md:justify-start w-full">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <h3 class="font-western text-white text-4xl md:text-5xl uppercase tracking-widest border-y border-white py-1 mb-2">FRESH</h3>
+                <span class="font-sans text-white text-[10px] tracking-[0.3em] uppercase ml-1">Middle Eastern</span>
+            </div>
+
+            <!-- Middle: Plate + Price -->
+            <div class="md:w-2/4 flex justify-center relative mb-12 md:mb-0">
+                <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] border-[6px] border-surface-900 bg-black">
+                    <img src="Brand Assets/Shawarama.png" alt="Shawarma Plate" class="w-full h-full object-cover opacity-90">
+                </div>
+                <!-- Price Badge Overlapping -->
+                <div class="absolute bottom-4 left-[15%] md:left-[10%] bg-[#d31111] text-white rounded-full w-24 h-24 md:w-28 md:h-28 flex items-center justify-center font-block text-3xl md:text-4xl shadow-2xl border-[5px] border-[#0a0a0a] transform -rotate-6">
+                    Rs.150
+                </div>
+            </div>
+
+            <!-- Right: Title & Desc -->
+            <div class="md:w-1/4 flex flex-col items-center md:items-start text-center md:text-left">
+                <span class="font-block text-white text-sm tracking-widest uppercase mb-2">Signature</span>
+                <!-- Red Brush Stroke Title Background -->
+                <div class="relative inline-block mb-4">
+                    <div class="absolute inset-0 bg-[#d31111] transform -skew-x-12 scale-[1.15] z-0 rounded-sm"></div>
+                    <h4 class="font-block text-black text-3xl md:text-4xl uppercase relative z-10 px-2 py-1 tracking-wide leading-none">Shawarma Plate</h4>
+                </div>
+                <p class="font-sans text-gray-500 text-xs leading-relaxed max-w-[200px] mt-2">
+                    Juicy, slow-roasted chicken shawarma served on a plate with fresh kuboos and our signature garlic mayo.
+                </p>
+                <!-- Social Dots / Icons -->
+                <div class="flex gap-2 mt-6">
+                    <div class="w-2 h-2 rounded-full bg-[#d31111]"></div>
+                    <div class="w-2 h-2 rounded-full bg-gray-500"></div>
+                    <div class="w-2 h-2 rounded-full bg-gray-500"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Item 2: Chicken Fillet Burger -->
+        <div class="relative w-full px-6 lg:px-12 py-12 flex flex-col md:flex-row items-center justify-between border-b border-surface-800">
+            <div class="md:w-1/4 flex flex-col items-center md:items-start text-center md:text-left transform -rotate-3 mb-12 md:mb-0">
+                <div class="flex gap-1 mb-2 text-white justify-center md:justify-start w-full">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <h3 class="font-western text-white text-4xl md:text-5xl uppercase tracking-widest border-y border-white py-1 mb-2">CRISPY</h3>
+                <span class="font-sans text-white text-[10px] tracking-[0.3em] uppercase ml-1">Hand Breaded</span>
+            </div>
+
+            <div class="md:w-2/4 flex justify-center relative mb-12 md:mb-0">
+                <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] border-[6px] border-surface-900 bg-black">
+                    <img src="Brand Assets/Chicken fillet.jpeg" alt="Chicken Fillet Burger" class="w-full h-full object-cover opacity-90">
+                </div>
+                <div class="absolute bottom-4 left-[15%] md:left-[10%] bg-[#d31111] text-white rounded-full w-24 h-24 md:w-28 md:h-28 flex items-center justify-center font-block text-3xl md:text-4xl shadow-2xl border-[5px] border-[#0a0a0a] transform -rotate-6">
+                    Rs.130
+                </div>
+            </div>
+
+            <div class="md:w-1/4 flex flex-col items-center md:items-start text-center md:text-left">
+                <span class="font-block text-white text-sm tracking-widest uppercase mb-2">Customer Favorite</span>
+                <div class="relative inline-block mb-4">
+                    <div class="absolute inset-0 bg-[#d31111] transform -skew-x-12 scale-[1.15] z-0 rounded-sm"></div>
+                    <h4 class="font-block text-black text-3xl md:text-4xl uppercase relative z-10 px-2 py-1 tracking-wide leading-none">Chicken Fillet</h4>
+                </div>
+                <p class="font-sans text-gray-500 text-xs leading-relaxed max-w-[200px] mt-2">
+                    Golden, crispy fried chicken fillet topped with fresh lettuce and our signature house mayo.
+                </p>
+                <div class="flex gap-2 mt-6">
+                    <div class="w-2 h-2 rounded-full bg-gray-500"></div>
+                    <div class="w-2 h-2 rounded-full bg-[#d31111]"></div>
+                    <div class="w-2 h-2 rounded-full bg-gray-500"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 3: Barbeque Chicken -->
+        <div class="relative w-full px-6 lg:px-12 py-12 flex flex-col md:flex-row items-center justify-between border-b border-surface-800">
+            <div class="md:w-1/4 flex flex-col items-center md:items-start text-center md:text-left transform -rotate-3 mb-12 md:mb-0">
+                <div class="flex gap-1 mb-2 text-white justify-center md:justify-start w-full">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <h3 class="font-western text-white text-4xl md:text-5xl uppercase tracking-widest border-y border-white py-1 mb-2">SMOKY</h3>
+                <span class="font-sans text-white text-[10px] tracking-[0.3em] uppercase ml-1">Signature Grill</span>
+            </div>
+
+            <div class="md:w-2/4 flex justify-center relative mb-12 md:mb-0">
+                <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] border-[6px] border-surface-900 bg-black">
+                    <img src="Brand Assets/Barbeque chicken.jpeg" alt="Barbeque Chicken" class="w-full h-full object-cover opacity-90">
+                </div>
+                <div class="absolute bottom-4 left-[15%] md:left-[10%] bg-[#d31111] text-white rounded-full w-24 h-24 md:w-28 md:h-28 flex items-center justify-center font-block text-3xl md:text-4xl shadow-2xl border-[5px] border-[#0a0a0a] transform -rotate-6">
+                    Rs.160
+                </div>
+            </div>
+
+            <div class="md:w-1/4 flex flex-col items-center md:items-start text-center md:text-left">
+                <span class="font-block text-white text-sm tracking-widest uppercase mb-2">Hot & Spicy</span>
+                <div class="relative inline-block mb-4">
+                    <div class="absolute inset-0 bg-[#d31111] transform -skew-x-12 scale-[1.15] z-0 rounded-sm"></div>
+                    <h4 class="font-block text-black text-3xl md:text-4xl uppercase relative z-10 px-2 py-1 tracking-wide leading-none">BBQ Chicken</h4>
+                </div>
+                <p class="font-sans text-gray-500 text-xs leading-relaxed max-w-[200px] mt-2">
+                    Tender, fire-roasted chicken tossed in our signature smoky barbeque sauce.
+                </p>
+                <div class="flex gap-2 mt-6">
+                    <div class="w-2 h-2 rounded-full bg-gray-500"></div>
+                    <div class="w-2 h-2 rounded-full bg-gray-500"></div>
+                    <div class="w-2 h-2 rounded-full bg-[#d31111]"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 4: Fried Chicken -->
+        <div class="relative w-full px-6 lg:px-12 py-12 flex flex-col md:flex-row items-center justify-between">
+            <div class="md:w-1/4 flex flex-col items-center md:items-start text-center md:text-left transform -rotate-3 mb-12 md:mb-0">
+                <div class="flex gap-1 mb-2 text-white justify-center md:justify-start w-full">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <h3 class="font-western text-white text-4xl md:text-5xl uppercase tracking-widest border-y border-white py-1 mb-2">CRUNCHY</h3>
+                <span class="font-sans text-white text-[10px] tracking-[0.3em] uppercase ml-1">Secret Spice</span>
+            </div>
+
+            <div class="md:w-2/4 flex justify-center relative mb-12 md:mb-0">
+                <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] border-[6px] border-surface-900 bg-black">
+                    <img src="Brand Assets/fried chicken.jpeg" alt="Fried Chicken" class="w-full h-full object-cover opacity-90">
+                </div>
+                <div class="absolute bottom-4 left-[15%] md:left-[10%] bg-[#d31111] text-white rounded-full w-24 h-24 md:w-28 md:h-28 flex items-center justify-center font-block text-3xl md:text-4xl shadow-2xl border-[5px] border-[#0a0a0a] transform -rotate-6">
+                    Rs.150
+                </div>
+            </div>
+
+            <div class="md:w-1/4 flex flex-col items-center md:items-start text-center md:text-left">
+                <span class="font-block text-white text-sm tracking-widest uppercase mb-2">Hot & Fresh</span>
+                <div class="relative inline-block mb-4">
+                    <div class="absolute inset-0 bg-[#d31111] transform -skew-x-12 scale-[1.15] z-0 rounded-sm"></div>
+                    <h4 class="font-block text-black text-3xl md:text-4xl uppercase relative z-10 px-2 py-1 tracking-wide leading-none">Fried Chicken</h4>
+                </div>
+                <p class="font-sans text-gray-500 text-xs leading-relaxed max-w-[200px] mt-2">
+                    Our signature fried chicken, perfectly golden brown on the outside and juicy on the inside.
+                </p>
+                <div class="flex gap-2 mt-6">
+                    <div class="w-2 h-2 rounded-full bg-gray-500"></div>
+                    <div class="w-2 h-2 rounded-full bg-[#d31111]"></div>
+                    <div class="w-2 h-2 rounded-full bg-gray-500"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Full Menu Section -->
+    <section class="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 py-16 border-t border-surface-800">
+        <div class="text-center mb-10">
+            <h3 class="font-sans text-brand-500 text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-2">Explore Our Flavors</h3>
+            <h2 class="font-block text-white text-5xl md:text-6xl tracking-wide uppercase">The Complete <span class="text-gray-500">Menu</span></h2>
+        </div>
+        <div class="w-full bg-[#111111] rounded-xl border-4 border-surface-800 shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden p-6 md:p-10 text-white font-sans relative">
+            
+            <!-- Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-8">
+                
+                <!-- Left Column -->
+                <div class="space-y-8 relative z-10">
+                    <!-- BBQ Chicken -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-4 tracking-wide bg-gradient-to-r from-brand-500 to-transparent bg-clip-text text-transparent">BBQ Chicken</h4>
+                        <ul class="space-y-3 text-sm md:text-base font-medium">
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Drumstick</span> <span class="text-gray-400">1 Pcs Rs.70 &nbsp;&nbsp;&nbsp; 2 Pcs Rs.135</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Lollipops</span> <span class="text-gray-400">3 Pcs Rs.100 &nbsp;&nbsp;&nbsp; 5 Pcs Rs.160</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Wings</span> <span class="text-gray-400">3 Pcs Rs.90 &nbsp;&nbsp;&nbsp; 5 Pcs Rs.140</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Strips</span> <span class="text-gray-400">4 Pcs Rs.160 &nbsp;&nbsp;&nbsp; 6 Pcs Rs.230</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Peri Peri Chicken Leg</span> <span class="text-gray-400">3 Pcs Rs.220 &nbsp;&nbsp;&nbsp; 5 Pcs Rs.330</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Pepper BBQ Chicken -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-4 tracking-wide bg-gradient-to-r from-brand-500 to-transparent bg-clip-text text-transparent">Pepper BBQ Chicken</h4>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs md:text-sm font-medium border-y border-surface-700 py-3">
+                            <div class="flex flex-col border-r border-surface-700"><span class="text-gray-400 mb-1">1 Pcs</span> <span class="text-white">Rs.70</span></div>
+                            <div class="flex flex-col border-r border-surface-700"><span class="text-gray-400 mb-1 leading-tight">2 Pcs<br><span class="text-[10px]">(QTR)</span></span> <span class="text-white">Rs.135</span></div>
+                            <div class="flex flex-col border-r border-surface-700"><span class="text-gray-400 mb-1 leading-tight">4 Pcs<br><span class="text-[10px]">(HALF)</span></span> <span class="text-white">Rs.250</span></div>
+                            <div class="flex flex-col border-r border-surface-700"><span class="text-gray-400 mb-1 leading-tight">8 Pcs<br><span class="text-[10px]">(FULL)</span></span> <span class="text-white">Rs.500</span></div>
+                            <div class="flex flex-col"><span class="text-gray-400 mb-1">12 Pcs</span> <span class="text-white">Rs.700</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Sea Food -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-4 tracking-wide bg-gradient-to-r from-brand-500 to-transparent bg-clip-text text-transparent">Sea Food</h4>
+                        <ul class="space-y-3 text-sm md:text-base font-medium">
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Sankara Fish</span> <span class="text-white font-bold">Rs.120</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">BBQ Fish Slice</span> <span class="text-white font-bold">Rs.130</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Full BBQ Fish (Bhasa)</span> <span class="text-white font-bold">Rs.300</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Prawn</span> <span class="text-gray-400">5 Pcs Rs.160 &nbsp;&nbsp;&nbsp; 10 Pcs Rs.300</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Veg BBQ -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-4 tracking-wide bg-gradient-to-r from-brand-500 to-transparent bg-clip-text text-transparent">Veg BBQ</h4>
+                        <ul class="space-y-3 text-sm md:text-base font-medium">
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Paneer</span> <span class="text-gray-400">5 Pcs Rs.90</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Pineapple</span> <span class="text-gray-400">4 Pcs Rs.80</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Center Column (Logo & Info) -->
+                <div class="flex flex-col items-center justify-center text-center space-y-8 relative z-20 border-y lg:border-y-0 lg:border-x border-surface-800 py-8 lg:py-0">
+                    <div class="flex flex-col items-center space-y-2">
+                        <span class="text-brand-500 text-sm font-bold tracking-widest uppercase">Door Opens</span>
+                        <span class="text-white text-xl font-block tracking-wide">11 a.m to 11 p.m</span>
+                        <div class="flex items-center gap-4 mt-2">
+                            <span class="text-green-500 font-bold border border-green-500 px-2 py-1 rounded-full text-xs uppercase">Halal</span>
+                            <span class="text-red-500 font-bold text-xs uppercase">Free Delivery<br><span class="text-[10px] text-gray-400">Within 2 KMS</span></span>
+                        </div>
+                    </div>
+
+                    <!-- New Brand Logo seamlessly embedded -->
+                    <div class="relative w-full max-w-[250px] mx-auto flex items-center justify-center">
+                        <img src="Brand Assets/Mr.Moglee - Final Logo.jpg.jpeg" alt="Moglee's Kitchen Logo" class="w-full h-auto mix-blend-screen opacity-90">
+                    </div>
+
+
+                </div>
+
+                <!-- Right Column -->
+                <div class="space-y-10 relative z-10">
+                    
+                    <!-- Burger Combos -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-6 tracking-wide text-center">Burger Combos</h4>
+                        <div class="grid grid-cols-3 gap-4 text-center text-xs md:text-sm">
+                            <div class="flex flex-col space-y-2">
+                                <span class="text-white font-bold">Veg Burger</span>
+                                <span class="text-gray-400 leading-tight">5 PCS Veg Nuggets<br>French Fries (R)<br>Drink</span>
+                                <span class="text-brand-500 font-bold mt-2">Rs.230/-</span>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <span class="text-white font-bold">Chicken Fillet Burger</span>
+                                <span class="text-gray-400 leading-tight">5 PCS Lollipop<br>French Fries (R)<br>Drink</span>
+                                <span class="text-brand-500 font-bold mt-2">Rs.360/-</span>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <span class="text-white font-bold">Fish Fillet Burger</span>
+                                <span class="text-gray-400 leading-tight">4 PCS Fish Strips<br>French Fries (R)<br>Drink</span>
+                                <span class="text-brand-500 font-bold mt-2">Rs.370/-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wings Combos -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-6 tracking-wide text-center">Wings Combos</h4>
+                        <div class="grid grid-cols-3 gap-4 text-center text-xs md:text-sm">
+                            <div class="flex flex-col space-y-2">
+                                <span class="text-gray-400 leading-tight">5 PCS Wings<br>French Fries (R)<br>Drink</span>
+                                <span class="text-brand-500 font-bold mt-2">Rs.225/-</span>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <span class="text-gray-400 leading-tight">10 PCS Wings<br>French Fries (R)<br>Drink</span>
+                                <span class="text-brand-500 font-bold mt-2">Rs.350/-</span>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <span class="text-gray-400 leading-tight">20 PCS Wings<br>French Fries (L)<br>Drink</span>
+                                <span class="text-brand-500 font-bold mt-2">Rs.620/-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lollipop Combos -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-6 tracking-wide text-center">Lollipop Combos</h4>
+                        <div class="grid grid-cols-3 gap-4 text-center text-xs md:text-sm">
+                            <div class="flex flex-col space-y-2">
+                                <span class="text-gray-400 leading-tight">5 PCS Lollipops<br>French Fries (R)<br>Drink</span>
+                                <span class="text-brand-500 font-bold mt-2">Rs.240/-</span>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <span class="text-gray-400 leading-tight">10 PCS Lollipops<br>French Fries (R)<br>Drink</span>
+                                <span class="text-brand-500 font-bold mt-2">Rs.380/-</span>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <span class="text-gray-400 leading-tight">20 PCS Lollipops<br>French Fries (L)<br>Drink</span>
+                                <span class="text-brand-500 font-bold mt-2">Rs.570/-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Special Combos -->
+                    <div class="grid grid-cols-2 gap-6 pt-6 border-t border-surface-800">
+                        <div class="flex flex-col text-center">
+                            <span class="text-white font-block text-2xl tracking-wide mb-1">Party Pack</span>
+                            <span class="text-brand-500 font-bold text-xl mb-3">Rs.1,999</span>
+                            <ul class="text-gray-400 text-xs md:text-sm space-y-1">
+                                <li>12 PCS Chicken</li>
+                                <li>10 PCS Wings</li>
+                                <li>4 PCS Strips</li>
+                                <li>Drink Big</li>
+                            </ul>
+                        </div>
+                        <div class="flex flex-col text-center">
+                            <span class="text-white font-block text-2xl tracking-wide mb-1">Birthday Pack</span>
+                            <span class="text-brand-500 font-bold text-xl mb-3">Rs.1,299</span>
+                            <ul class="text-gray-400 text-xs md:text-sm space-y-1">
+                                <li>8 PCS Chicken</li>
+                                <li>5 PCS Peri Peri</li>
+                                <li>5 PCS Wings</li>
+                                <li>5 PCS Lollipop</li>
+                                <li>Drink Big</li>
+                                <li>1/2 KG Blackforest</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Second Menu Section (Extended Menu) -->
+    <section class="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 py-16 border-t border-surface-800">
+        <div class="text-center mb-10">
+            <h3 class="font-sans text-brand-500 text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-2">More Delicious Options</h3>
+            <h2 class="font-block text-white text-5xl md:text-6xl tracking-wide uppercase">Menu <span class="text-gray-500">Part 2</span></h2>
+        </div>
+        
+        <div class="w-full bg-[#111111] rounded-xl border-4 border-surface-800 shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden p-6 md:p-10 text-white font-sans relative">
+            
+            <!-- Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-8">
+                
+                <!-- Left Column -->
+                <div class="space-y-8 relative z-10">
+                    <!-- STARTERS -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-4 tracking-wide bg-gradient-to-r from-brand-500 to-transparent bg-clip-text text-transparent">Starters</h4>
+                        
+                        <!-- Starters Image integrated into the section -->
+                        <div class="mb-6 w-full flex justify-center">
+                            <img src="Brand Assets/french_fries.png" alt="Delicious Starters" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-brand-500 object-cover shadow-[0_0_15px_rgba(211,17,17,0.4)]">
+                        </div>
+                        <ul class="space-y-3 text-sm md:text-base font-medium">
+                            <li class="flex justify-between items-center"><span class="text-gray-200">French Fries</span> <span class="text-gray-400">(R) Rs.70 &nbsp;&nbsp;(L) Rs.80</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Peri Peri Fries</span> <span class="text-gray-400">(R) Rs.80 &nbsp;&nbsp;(L) Rs.90</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Veg Nuggets</span> <span class="text-white font-bold">Rs.65</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Veg Cheesy Balls (5pcs)</span> <span class="text-white font-bold">Rs.80</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Cheese Corn Nuggets (5pcs)</span> <span class="text-white font-bold">Rs.90</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Veg Fried Roll (5pcs)</span> <span class="text-white font-bold">Rs.100</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Fried Paneer Momos</span> <span class="text-white font-bold">Rs.120</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Fried Chicken Momos</span> <span class="text-white font-bold">Rs.120</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Pops (100g)</span> <span class="text-white font-bold">Rs.100</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Cheese Pops (5 Pcs)</span> <span class="text-white font-bold">Rs.110</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Nuggets (5 Pcs)</span> <span class="text-white font-bold">Rs.110</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- BURGER -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-4 tracking-wide bg-gradient-to-r from-brand-500 to-transparent bg-clip-text text-transparent">Burger</h4>
+                        
+                        <!-- Burger Image integrated into the section -->
+                        <div class="mb-6 w-full flex justify-center">
+                            <img src="Brand Assets/Chicken fillet.jpeg" alt="Delicious Burger" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-brand-500 object-cover shadow-[0_0_15px_rgba(211,17,17,0.4)]">
+                        </div>
+                        <div class="text-xs text-brand-500 mb-2 font-bold uppercase">Spicy Extra Rs.10/-</div>
+                        <ul class="space-y-3 text-sm md:text-base font-medium">
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Veg Burger</span> <span class="text-white font-bold">Rs.90</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Paneer Patty Burger</span> <span class="text-white font-bold">Rs.100</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Cheesy Veg Burger</span> <span class="text-white font-bold">Rs.110</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Cheesy Paneer Burger</span> <span class="text-white font-bold">Rs.130</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Patty Burger</span> <span class="text-white font-bold">Rs.100</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Fillet Burger</span> <span class="text-white font-bold">Rs.130</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">BBQ Chicken Burger</span> <span class="text-white font-bold">Rs.130</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Egg Burger</span> <span class="text-white font-bold">Rs.110</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Fish Fillet Burger</span> <span class="text-white font-bold">Rs.130</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- ADD ONS -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-4 tracking-wide bg-gradient-to-r from-brand-500 to-transparent bg-clip-text text-transparent">Add Ons</h4>
+                        
+                        <!-- Add Ons Image integrated into the section -->
+                        <div class="mb-6 w-full flex justify-center">
+                            <img src="Brand Assets/Add on.png" alt="Delicious Add Ons" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-brand-500 object-cover shadow-[0_0_15px_rgba(211,17,17,0.4)]">
+                        </div>
+                        <ul class="space-y-3 text-sm md:text-base font-medium">
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Extra Kuboos</span> <span class="text-white font-bold">Rs.15</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Extra Cheese</span> <span class="text-white font-bold">Rs.25</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Tandoori Mayo</span> <span class="text-white font-bold">Rs.15</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Veg Mayo</span> <span class="text-white font-bold">Rs.10</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Center Column -->
+                <div class="space-y-8 relative z-10 border-y lg:border-y-0 lg:border-x border-surface-800 py-8 lg:py-0 px-0 lg:px-6">
+                    <!-- MOGLEE FRIED CHICKEN -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-4 tracking-wide bg-gradient-to-r from-brand-500 to-transparent bg-clip-text text-transparent">Moglee Fried Chicken</h4>
+                        
+                        <!-- Fried Chicken Image integrated into the section -->
+                        <div class="mb-6 w-full flex justify-center">
+                            <img src="Brand Assets/fried chicken.jpeg" alt="Delicious Fried Chicken" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-brand-500 object-cover shadow-[0_0_15px_rgba(211,17,17,0.4)]">
+                        </div>
+                        <ul class="space-y-3 text-sm md:text-base font-medium">
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Wings</span> <span class="text-gray-400">5 Pcs Rs.140</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Lollipop</span> <span class="text-gray-400">5 Pcs Rs.160</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Popcorn</span> <span class="text-gray-400">150g Rs.150</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Fish Strips</span> <span class="text-gray-400">4 Pcs Rs.175</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Strips</span> <span class="text-gray-400">4 Pcs Rs.175</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Prawns</span> <span class="text-gray-400">5 Pcs Rs.150</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- SHAWARMA -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-4 tracking-wide bg-gradient-to-r from-brand-500 to-transparent bg-clip-text text-transparent">Shawarma</h4>
+                        
+                        <!-- Shawarma Image integrated into the section -->
+                        <div class="mb-6 w-full flex justify-center">
+                            <img src="Brand Assets/Shawarama.png" alt="Delicious Shawarma" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-brand-500 object-cover shadow-[0_0_15px_rgba(211,17,17,0.4)]">
+                        </div>
+
+                        <div class="text-xs text-brand-500 mb-2 font-bold uppercase">Special Extra Rs.20/-</div>
+                        <ul class="space-y-3 text-sm md:text-base font-medium">
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Shawarma Roll</span> <span class="text-white font-bold">Rs.100</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Shawarma Plate</span> <span class="text-white font-bold">Rs.150</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Fried Shawarma Roll</span> <span class="text-white font-bold">Rs.100</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Fried Shawarma Plate</span> <span class="text-white font-bold">Rs.150</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Paneer Shawarma Roll</span> <span class="text-white font-bold">Rs.100</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Paneer Shawarma Plate</span> <span class="text-white font-bold">Rs.150</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Veg Shawarma Roll</span> <span class="text-white font-bold">Rs.90</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Veg Shawarma Plate</span> <span class="text-white font-bold">Rs.120</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- SANDWICH -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-4 tracking-wide bg-gradient-to-r from-brand-500 to-transparent bg-clip-text text-transparent">Sandwich</h4>
+                        
+                        <!-- Sandwich Image integrated into the section -->
+                        <div class="mb-6 w-full flex justify-center">
+                            <img src="Brand Assets/Sandwich.png" alt="Delicious Sandwich" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-brand-500 object-cover shadow-[0_0_15px_rgba(211,17,17,0.4)]">
+                        </div>
+                        <div class="text-xs text-brand-500 mb-2 font-bold uppercase">Extra Cheese Rs.15/-</div>
+                        <ul class="space-y-3 text-sm md:text-base font-medium">
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Veg Sandwich</span> <span class="text-white font-bold">Rs.60</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Paneer Sandwich</span> <span class="text-white font-bold">Rs.70</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Corn Sandwich</span> <span class="text-white font-bold">Rs.70</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Veg Cheesy Sandwich</span> <span class="text-white font-bold">Rs.70</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chicken Sandwich</span> <span class="text-white font-bold">Rs.90</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Egg Sandwich</span> <span class="text-white font-bold">Rs.80</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="space-y-8 relative z-10">
+                    <!-- ICE CREAM -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-4 tracking-wide bg-gradient-to-r from-brand-500 to-transparent bg-clip-text text-transparent">Ice Cream</h4>
+                        
+                        <!-- Ice Cream Image integrated into the section -->
+                        <div class="mb-6 w-full flex justify-center">
+                            <img src="Brand Assets/ice_cream.png" alt="Delicious Ice Cream" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-brand-500 object-cover shadow-[0_0_15px_rgba(211,17,17,0.4)]">
+                        </div>
+                        <div class="text-xs text-brand-500 mb-2 font-bold uppercase flex justify-end gap-6"><span class="w-12 text-right">2 SCPS</span><span class="w-12 text-right">3 SCPS</span></div>
+                        <ul class="space-y-3 text-sm md:text-base font-medium">
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Vanilla</span> <div class="flex gap-6"><span class="text-white font-bold w-12 text-right">Rs.60</span><span class="text-white font-bold w-12 text-right">Rs.75</span></div></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Strawberry</span> <div class="flex gap-6"><span class="text-white font-bold w-12 text-right">Rs.60</span><span class="text-white font-bold w-12 text-right">Rs.75</span></div></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chocolate</span> <div class="flex gap-6"><span class="text-white font-bold w-12 text-right">Rs.65</span><span class="text-white font-bold w-12 text-right">Rs.80</span></div></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Pista</span> <div class="flex gap-6"><span class="text-white font-bold w-12 text-right">Rs.65</span><span class="text-white font-bold w-12 text-right">Rs.80</span></div></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Butter Scotch</span> <div class="flex gap-6"><span class="text-white font-bold w-12 text-right">Rs.65</span><span class="text-white font-bold w-12 text-right">Rs.80</span></div></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Mango</span> <div class="flex gap-6"><span class="text-white font-bold w-12 text-right">Rs.60</span><span class="text-white font-bold w-12 text-right">Rs.75</span></div></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Black Currant</span> <div class="flex gap-6"><span class="text-white font-bold w-12 text-right">Rs.70</span><span class="text-white font-bold w-12 text-right">Rs.90</span></div></li>
+                        </ul>
+                    </div>
+
+                    <!-- MILK SHAKE -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-4 tracking-wide bg-gradient-to-r from-brand-500 to-transparent bg-clip-text text-transparent">Milk Shake</h4>
+                        
+                        <!-- Milk Shake Image integrated into the section -->
+                        <div class="mb-6 w-full flex justify-center">
+                            <img src="Brand Assets/Milkshake image.png" alt="Delicious Milk Shake" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-brand-500 object-cover shadow-[0_0_15px_rgba(211,17,17,0.4)]">
+                        </div>
+                        <ul class="space-y-3 text-sm md:text-base font-medium">
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Vanilla</span> <span class="text-white font-bold">Rs.90</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Strawberry</span> <span class="text-white font-bold">Rs.90</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Chocolate</span> <span class="text-white font-bold">Rs.100</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Pista</span> <span class="text-white font-bold">Rs.100</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Butter Scotch</span> <span class="text-white font-bold">Rs.100</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Mango</span> <span class="text-white font-bold">Rs.90</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Pomegranate</span> <span class="text-white font-bold">Rs.100</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Banana</span> <span class="text-white font-bold">Rs.90</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Black Currant</span> <span class="text-white font-bold">Rs.150</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- FALOODA & SPL DRINK -->
+                    <div>
+                        <h4 class="text-brand-500 font-block text-3xl mb-4 tracking-wide bg-gradient-to-r from-brand-500 to-transparent bg-clip-text text-transparent">Falooda</h4>
+                        
+                        <!-- Falooda Image integrated into the section -->
+                        <div class="mb-6 w-full flex justify-center">
+                            <img src="Brand Assets/Falooda.png" alt="Delicious Falooda" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-brand-500 object-cover shadow-[0_0_15px_rgba(211,17,17,0.4)]">
+                        </div>
+                        <ul class="space-y-3 text-sm md:text-base font-medium mb-6">
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Falooda</span> <span class="text-white font-bold">Rs.120</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">SPL Falooda</span> <span class="text-white font-bold">Rs.150</span></li>
+                        </ul>
+
+                        <h4 class="text-brand-500 font-block text-3xl mb-4 tracking-wide bg-gradient-to-r from-brand-500 to-transparent bg-clip-text text-transparent">Moglee SPL Drink</h4>
+                        
+                        <!-- Moglee SPL Drink Image integrated into the section -->
+                        <div class="mb-6 w-full flex justify-center">
+                            <img src="Brand Assets/badammilk.png" alt="Delicious Moglee SPL Drink" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-brand-500 object-cover shadow-[0_0_15px_rgba(211,17,17,0.4)]">
+                        </div>
+                        <ul class="space-y-3 text-sm md:text-base font-medium">
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Jil Jigara</span> <span class="text-white font-bold">Rs.125</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Badam Milk</span> <span class="text-white font-bold">Rs.40</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Rose Milk</span> <span class="text-white font-bold">Rs.40</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Mint Mojito</span> <span class="text-white font-bold">Rs.65</span></li>
+                            <li class="flex justify-between items-center"><span class="text-gray-200">Blue Mojito</span> <span class="text-white font-bold">Rs.60</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Features Bar -->
+    <section class="relative z-10 w-full bg-surface-800 border-y border-surface-700 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="flex items-center gap-4">
+                <svg class="w-8 h-8 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <div class="flex flex-col">
+                    <span class="font-block text-white uppercase tracking-wider text-sm">Fire-Grilled</span>
+                    <span class="font-sans text-gray-400 text-[10px]">Low and slow for flavor.</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <svg class="w-8 h-8 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <div class="flex flex-col">
+                    <span class="font-block text-white uppercase tracking-wider text-sm">Fresh Daily</span>
+                    <span class="font-sans text-gray-400 text-[10px]">Quality ingredients prepared fresh.</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <svg class="w-8 h-8 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="flex flex-col">
+                    <span class="font-block text-white uppercase tracking-wider text-sm">Friendly Service</span>
+                    <span class="font-sans text-gray-400 text-[10px]">Hospitality that makes you feel at home.</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <svg class="w-8 h-8 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                <div class="flex flex-col">
+                    <span class="font-block text-white uppercase tracking-wider text-sm">Order Online</span>
+                    <span class="font-sans text-gray-400 text-[10px]">Fast delivery right to your door.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 py-16 flex flex-col md:flex-row justify-between items-center gap-12">
+        
+        <div class="md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left">
+            <h3 class="font-script text-brand-500 text-4xl mb-2 transform -rotate-2">Bring the flavor home!</h3>
+            <h2 class="font-block text-white text-5xl md:text-6xl tracking-wide uppercase mb-6">
+                Order Online Today
+            </h2>
+            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                <a href="#order" class="btn-orange bg-brand-500 text-white font-block tracking-widest text-lg px-8 py-4 transition-all uppercase flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    Order Online
+                </a>
+                <a href="#call" class="border border-surface-600 text-white font-block tracking-widest text-lg px-8 py-4 hover:bg-surface-800 transition-all uppercase flex items-center gap-2">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                    Call Us<br/><span class="text-xs text-gray-400">555-123-4567</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="md:w-1/2 flex flex-col gap-6 font-sans text-sm border-l-0 md:border-l border-surface-700 md:pl-12 w-full max-w-sm">
+            <h4 class="font-block text-white uppercase tracking-wider text-lg mb-2">Our Locations</h4>
+            
+            <a href="https://www.google.com/maps/dir/Kattupakkam,+Chennai,+Tamil+Nadu/Moglee's+kitchen,+27,+Vanniyar+Mettu+St,+Ramachandra+Nagar,+Iyyappanthangal,+Chennai,+Ayyappanthangal,+Tamil+Nadu+600056/@13.0397049,80.1245739,16z/data=!3m1!4b1!4m13!4m12!1m5!1m1!1s0x3a5261ba19a176f1:0x1e5ce1e2c0ff67e4!2m2!1d80.1267136!2d13.0413894!1m5!1m1!1s0x3a526194f2bddfc1:0xfa052397f8c22491!2m2!1d80.135326!2d13.0368422?entry=ttu&g_ep=EgoyMDI2MDcwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="flex items-start gap-4 group hover:text-white transition-colors">
+                <svg class="w-6 h-6 text-brand-500 mt-0.5 shrink-0 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <div class="flex flex-col text-gray-300 group-hover:text-white transition-colors">
+                    <span class="text-white font-bold mb-1">Iyyappanthangal</span>
+                    <span>27, Vanniyar Mettu St, Ramachandra Nagar</span>
+                    <span>Chennai, Tamil Nadu 600056</span>
+                </div>
+            </a>
+
+            <a href="https://www.google.com/maps/place/MR.Moglee/@13.0427306,80.1215175,15z/data=!4m6!3m5!1s0x3a5261002abf8c8b:0x51187f3f32b73b39!8m2!3d13.0441103!4d80.1156596!16s%2Fg%2F11mm036twr?entry=ttu&g_ep=EgoyMDI2MDcxNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="flex items-start gap-4 group hover:text-white transition-colors">
+                <svg class="w-6 h-6 text-brand-500 mt-0.5 shrink-0 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <div class="flex flex-col text-gray-300 group-hover:text-white transition-colors">
+                    <span class="text-white font-bold mb-1">Kumananchavadi</span>
+                    <span>1/B, Ground Floor, Murugapillai St</span>
+                    <span>Chennai, Tamil Nadu 600056</span>
+                </div>
+            </a>
+
+            <a href="https://www.google.com/maps?q=12.796507835388184,77.70680236816406&z=17&hl=en" target="_blank" class="flex items-start gap-4 group hover:text-white transition-colors">
+                <svg class="w-6 h-6 text-brand-500 mt-0.5 shrink-0 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <div class="flex flex-col text-gray-300 group-hover:text-white transition-colors">
+                    <span class="text-white font-bold mb-1">Chandapura</span>
+                    <span>Near optical express, Anekal main road</span>
+                    <span>Chandapura Bangalore-560081</span>
+                </div>
+            </a>
+            <div class="flex items-start gap-4">
+                <svg class="w-6 h-6 text-brand-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="flex flex-col text-gray-300">
+                    <span class="text-white font-bold">CLOSED • Opens 11:30 AM</span>
+                    <a href="#" class="text-gray-500 hover:text-white transition-colors underline">See more hours</a>
+                </div>
+            </div>
+            <div class="flex items-start gap-4">
+                <svg class="w-6 h-6 text-brand-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+                <div class="flex flex-col text-white font-bold">
+                    DINE-IN • DRIVE-THROUGH
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+</body>
+</html>
